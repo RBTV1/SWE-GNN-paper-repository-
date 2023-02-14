@@ -3,7 +3,7 @@ Code repository for paper "Generalized Spatio-Temporal Rapid Flood Modelling via
 
 (Version 1.0 (review) - Feb. 15th, 2023)
 
-![Summary figure](Summary figure.pdf)
+![Summary figure](Summary figure.png)
 
 ## Overview
 
