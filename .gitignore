@@ -3,4 +3,5 @@
 *.txt
 __pycache__
 *.pyc
+*.zip
 wandb
