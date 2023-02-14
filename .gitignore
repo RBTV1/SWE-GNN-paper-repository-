@@ -1,0 +1,6 @@
+*.ist
+*.pkl
+*.txt
+__pycache__
+*.pyc
+wandb

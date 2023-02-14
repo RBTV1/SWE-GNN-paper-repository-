@@ -1,0 +1,100 @@
+# dataset creation parameters
+dataset_parameters:
+  database_folder: 'database/datasets'
+  temporal_res: 60
+  with_vel: 'scalar'
+  use_discharge: True
+  train_size: 5
+  val_prcnt: 0.25
+  # test_size: 25 #'big'
+  test_size: 'random_breach'
+  seed: 1234
+
+# Scaler options: null, 'minmax', 'minmax_neg', or 'standard'
+scalers: 
+  DEM_scaler        : null
+  slope_scaler      : null
+  WD_scaler         : null
+  V_scaler          : null
+  edge_slope_scaler : null
+
+# node features
+selected_node_features : 
+  slope_x       : True
+  slope_y       : True
+  area          : False
+  DEM           : True
+
+# edge features
+selected_edge_features : 
+  cell_length   : True
+  normal_x      : True
+  normal_y      : True
+  edge_slope    : False
+
+# temporal training dataset
+temporal_dataset_parameters:
+  rollout_steps : 6
+  previous_t    : 2
+  time_start    : 1
+  time_stop     : -1 #*int(60/temporal_res)
+  with_x        : True
+  add_t         : False
+
+# Models hyperparameters
+models:
+    # model_type        : 'GNN'
+    # type_GNN          : "SWEGNN"
+    # hid_features      : 8
+    # n_GNN_layers      : 1
+    # mlp_layers        : 2
+    # mlp_activation    : 'prelu'
+    # gnn_activation    : 'tanh'
+    # dropout           : 0
+    # learned_residuals : False
+    # seed              : 4444
+    # K                 : 1
+    # edge_mlp          : True
+    # normalize         : True
+    # with_filter_matrix: True
+    # with_gradient     : True
+    # with_WL           : True
+
+    # model_type        : 'MLP'
+    # hid_features      : 256
+    # n_layers          : 4
+    # activation        : 'relu'
+    # dropout           : 0
+    # learned_residuals : False
+    # seed              : 42
+
+    model_type        : 'CNN'
+    initial_hid_dim   : 64
+    n_downsamples     : 3
+    activation        : 'prelu'
+    learned_residuals : null
+    seed              : 42
+            
+trainer_options:
+  type_loss         : 'RMSE'
+  only_where_water  : True
+  batch_size        : 8
+  gamma             : 1
+  alpha             : 0
+  conservation      : 0
+  velocity_scaler   : 3
+  curriculum_epoch  : 15
+  patience          : 30
+  max_epochs        : 150
+  report_freq       : 10
+
+# learning rate
+lr_info:
+    learning_rate   : 0.005
+    weight_decay    : 0
+    gamma           : 0.9
+    step_size       : 7
+
+temporal_test_dataset_parameters:
+  time_start  : 1
+  time_stop   : -1
