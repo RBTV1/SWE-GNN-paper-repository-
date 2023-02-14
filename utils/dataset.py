@@ -40,7 +40,7 @@ def slopes_from_DEM(DEM):
     slope_x, slope_y = torch.gradient(DEM)
     return slope_x.reshape(-1), slope_y.reshape(-1)
 
-def get_temporal_res(matrix, temporal_res=10):
+def get_temporal_res(matrix, temporal_res=30):
     '''
     extracts a sub-matrix with time_step [min] from a temporal matrix [N, T]
     ------
@@ -49,7 +49,7 @@ def get_temporal_res(matrix, temporal_res=10):
     time_step: int
         selects the desired time step for the temporal resolution
     '''
-    selected_times = torch.arange(0, matrix.shape[-1], temporal_res/10, dtype=int)
+    selected_times = torch.arange(0, matrix.shape[-1], temporal_res/30, dtype=int)
         
     return matrix[:, selected_times]
 
