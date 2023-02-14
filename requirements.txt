@@ -1,0 +1,13 @@
+matplotlib
+networkx
+numpy
+pandas
+scikit_learn
+scipy
+tqdm
+netCDF4
+perlin_noise
+ipywidgets
+PyYAML
+wandb
+torch
