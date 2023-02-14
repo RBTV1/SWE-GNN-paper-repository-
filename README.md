@@ -3,18 +3,16 @@ Code repository for paper "Generalized Spatio-Temporal Rapid Flood Modelling via
 
 (Version 1.0 (review) - Feb. 15th, 2023)
 
-![pred_true_h_5](./results/pred_true_h_5.png)
+![Summary figure](Summary figure.pdf)
 
 ## Overview
 
-This repository contains the code for creating a metamodel of EPA-SWMM using Graph Neural Networks.
 For the viewing all simulations with the best model, check <https://drive.google.com/drive/folders/1OsXgFvAUa2ylwFm-qQMmjWqScxR0xJGK?usp=sharing>.
 
 For reproducing the paper's results, explore **plot_results.ipynb**
 
-For training the model run **main.py**
-For training and exploring the model, run **main.ipynb**
-Both **main.py** and **main.ipynb** use **config.yaml** as reference configuration file.
+For training the model run **main.py** (uses **config.yaml** as reference configuration file)
+For exploring the trained models, run **try_model.ipynb**
 
 The repository is divided in the following folders:
 
@@ -24,8 +22,6 @@ Also contains the output of the hydrodynamic simulations (**raw_datasets**: for 
 * **models:**  Deep learning models developed for surrogating the hydraulic one: contains MLP, CNN, and GNNs, as well as a base class with common inputs and functions.
 
 * **results:** Contains trained models and respective configuration files, used for the paper's results.
-
-* **tests:** Contains testing functions to validate the correct execution of some functions (still has to be completed, but there are also many assertions within the code)
 
 * **training:** Contains loss functions, Trainer object, and testing functions.
 
