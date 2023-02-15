@@ -134,6 +134,7 @@ def create_grid_dataset(dataset_folder, n_sim, start_sim=1, number_grids=64):
     n_sim: int
         number of simulations used in the dataset creation
     '''
+    assert os.path.exists(dataset_folder), "There is no raw dataset folder"
     grid_dataset = []
 
     graph, pos = center_grid_graph(number_grids,number_grids)
