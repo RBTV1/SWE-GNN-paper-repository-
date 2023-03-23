@@ -162,7 +162,9 @@ def get_rollout_loss(predicted_rollout, real_rollout, type_loss='RMSE', only_whe
     
     return roll_loss
 
-def plot_line_with_deviation(time_vector, variable, **plt_kwargs):
+def plot_line_with_deviation(time_vector, variable, ax=None, **plt_kwargs):
+    ax = ax or plt.gca()
+
     df = pd.DataFrame(np.vstack((time_vector, variable))).T
     df = df.rename(columns={0: "time"})
     df = df.set_index('time')
@@ -172,8 +174,10 @@ def plot_line_with_deviation(time_vector, variable, **plt_kwargs):
     under_line = (mean - std)
     over_line = (mean + std)
 
-    plt.plot(mean, linewidth=2, marker='o', **plt_kwargs)
-    plt.fill_between(std.index, under_line, over_line, alpha=.3)
+    p = ax.plot(mean, linewidth=2, marker='o', **plt_kwargs)
+    color = p[0].get_color()
+    ax.fill_between(std.index, under_line, over_line, color=color, alpha=.3)
+    return p
 
 def get_pareto_front(df, objective_function1, objective_function2, ascending=False):
     sorted_df = df.sort_values(by=[objective_function1, objective_function2], ascending=ascending)[[objective_function1, objective_function2]]
@@ -187,6 +191,7 @@ def get_pareto_front(df, objective_function1, objective_function2, ascending=Fal
 
 class SpatialAnalysis():
     def __init__(self, model, dataset, **temporal_test_dataset_parameters):
+        '''This class saves model predictions and real values and provides tools to analyse them'''
         self.dataset = dataset
         self.time_start = temporal_test_dataset_parameters['time_start']
         self.time_stop = temporal_test_dataset_parameters['time_stop']
@@ -194,6 +199,7 @@ class SpatialAnalysis():
         self.DEMs = self._get_DEMS(dataset)
         self.predicted_rollout, self.real_rollout, self.prediction_times = self._get_rollouts(
             model, dataset, **temporal_test_dataset_parameters)
+        self.diff_rollout = self.predicted_rollout - self.real_rollout
 
     def _get_rollouts(self, model, dataset, **temporal_test_dataset_parameters):
         if isinstance(dataset, list):
@@ -216,7 +222,7 @@ class SpatialAnalysis():
             DEMs = dataset.DEM
         return DEMs
 
-    def _plot_rollouts(self, metric_name, metric_function, water_thresholds=[0.05, 0.3]):
+    def _plot_metric_rollouts(self, metric_name, metric_function, water_thresholds=[0.05, 0.3]):
         '''Plots metric in time for different water_thresholds
         -------
         metric_function: 
@@ -229,7 +235,7 @@ class SpatialAnalysis():
             metric = metric_function(self.predicted_rollout, self.real_rollout, water_threshold=wt).to('cpu').numpy()
             all_metric.append(metric)
             metric = add_null_time_start(self.time_start, metric)
-            plot_line_with_deviation(self.time_vector, metric, label=f'{metric_name}_{wt}')
+            plot_line_with_deviation(self.time_vector, metric, ax=ax, label=f'{metric_name}_{wt}')
             # plt.legend()
             
         ax.set_xlabel('Time [h]')
@@ -239,6 +245,33 @@ class SpatialAnalysis():
         ax.legend(loc=4)
         
         return fig, np.array(all_metric)
+    
+    def _plot_rollouts(self, type_loss):
+        '''Plots loss in time for the different water variables'''
+        fig, ax = plt.subplots(figsize=(7,5))
+
+        water_labels = ['h [m]', '|q| [m^2/s]']
+        var_colors = ['royalblue', 'purple']
+        lines = []
+
+        ax2 = ax.twinx()
+        axx = ax
+
+        for var in range(self.diff_rollout.shape[2]):
+            average_diff_t = get_mean_error(self.diff_rollout, type_loss, nodes_dim=1)[:,var,:].to('cpu').numpy()
+            average_diff_t = add_null_time_start(self.time_start, average_diff_t)
+            lines.append(plot_line_with_deviation(self.time_vector, average_diff_t, ax=axx,
+                                        label=water_labels[var], c=var_colors[var])[0])
+            axx = ax2
+        
+        axx = ax
+        ax.set_xlabel('Time [h]')
+        ax.set_title(type_loss)
+
+        labs = [l.get_label() for l in lines]
+        ax.legend(lines, labs, loc=1)
+        
+        return fig
 
     def _get_CSI(self, water_threshold=0):
         return get_CSI(self.predicted_rollout, self.real_rollout, water_threshold=water_threshold)
@@ -247,10 +280,10 @@ class SpatialAnalysis():
         return get_F1(self.predicted_rollout, self.real_rollout, water_threshold=water_threshold)
 
     def plot_CSI_rollouts(self, water_thresholds=[0.05, 0.3]):
-        return self._plot_rollouts('CSI', get_CSI, water_thresholds=water_thresholds)
+        return self._plot_metric_rollouts('CSI', get_CSI, water_thresholds=water_thresholds)
 
     def plot_F1_rollouts(self, water_thresholds=[0.05, 0.3]):
-        return self._plot_rollouts('F1', get_F1, water_thresholds=water_thresholds)
+        return self._plot_metric_rollouts('F1', get_F1, water_thresholds=water_thresholds)
 
     def _get_rollout_loss(self, type_loss='RMSE', only_where_water=False):
         return get_rollout_loss(self.predicted_rollout, self.real_rollout, type_loss=type_loss, 
@@ -283,16 +316,8 @@ class SpatialAnalysis():
 
         positions=range(len(sorted_ids))
         
-        water_variables = rollout_loss.shape[1]
-        if water_variables == 1:
-            water_labels = ['h [m]']
-            var_colors = ['royalblue']
-        elif water_variables == 2:
-            water_labels = ['h [m]', '|q| [m^2/s]']
-            var_colors = ['royalblue', 'purple']
-        elif water_variables == 3:
-            water_labels = [r'h [m]', r'qx [m^2/s]', r'qy [m^2/s]']
-            var_colors = ['royalblue', 'orange', 'darkgreen']
+        water_labels = ['h [m]', '|q| [m^2/s]']
+        var_colors = ['royalblue', 'purple']
             
         axs[0].set_title(f'{ranking} ranking for test simulations')
         n_x_ticks = range(len(sorted_ids))
