@@ -348,7 +348,7 @@ def plot_rollout_diff_in_time_all(diff_rollout, temporal_res, type_loss='RMSE',
 def plot_rollout_diff_in_time_var(diff_rollout, temporal_res, type_loss='RMSE', dim=0, 
                                   time_start=0, ax=None, **plot_kwargs):
     '''Plot average node error distribution for a variable across time for a given simulation
-    Variable axis is identified by dim: 0 = WD, 1 = VX/V, 2 = VY
+    Variable axis is identified by dim: 0 = WD, 1 = Q
     '''
     diff_rollout = diff_rollout[:,dim,:].to('cpu')
 
