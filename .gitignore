@@ -3,4 +3,5 @@
 __pycache__
 *.pyc
 *.zip
+database/raw_datasets/*/*.txt
 wandb
