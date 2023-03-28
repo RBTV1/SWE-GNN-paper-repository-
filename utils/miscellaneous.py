@@ -222,13 +222,13 @@ class SpatialAnalysis():
             DEMs = dataset.DEM
         return DEMs
 
-    def _plot_metric_rollouts(self, metric_name, metric_function, water_thresholds=[0.05, 0.3]):
+    def _plot_metric_rollouts(self, metric_name, metric_function, water_thresholds=[0.05, 0.3], ax=None):
         '''Plots metric in time for different water_thresholds
         -------
         metric_function: 
             options: get_CSI, get_F1
         '''
-        fig, ax = plt.subplots(figsize=(7,5))
+        if ax is None: fig, ax = plt.subplots(figsize=(7,5))
 
         all_metric = []
         for wt in water_thresholds:
@@ -239,16 +239,16 @@ class SpatialAnalysis():
             # plt.legend()
             
         ax.set_xlabel('Time [h]')
-        ax.set_ylabel(f'{metric_name} score')
+        ax.set_title(f'{metric_name} score')
         ax.set_ylim(0,1)
         ax.grid()
         ax.legend(loc=4)
         
-        return fig, np.array(all_metric)
+        return ax, np.array(all_metric)
     
-    def _plot_rollouts(self, type_loss):
+    def _plot_rollouts(self, type_loss, ax=None):
         '''Plots loss in time for the different water variables'''
-        fig, ax = plt.subplots(figsize=(7,5))
+        if ax is None: fig, ax = plt.subplots(figsize=(7,5))
 
         water_labels = ['h [m]', '|q| [m^2/s]']
         var_colors = ['royalblue', 'purple']
@@ -263,15 +263,16 @@ class SpatialAnalysis():
             lines.append(plot_line_with_deviation(self.time_vector, average_diff_t, ax=axx,
                                         label=water_labels[var], c=var_colors[var])[0])
             axx = ax2
-        
+
+        ax2.tick_params(axis='y', colors=lines[var].get_color())            
         axx = ax
         ax.set_xlabel('Time [h]')
         ax.set_title(type_loss)
 
         labs = [l.get_label() for l in lines]
-        ax.legend(lines, labs, loc=1)
+        ax.legend(lines, labs, loc=2)
         
-        return fig
+        return ax
 
     def _get_CSI(self, water_threshold=0):
         return get_CSI(self.predicted_rollout, self.real_rollout, water_threshold=water_threshold)
@@ -279,11 +280,11 @@ class SpatialAnalysis():
     def _get_F1(self, water_threshold=0):
         return get_F1(self.predicted_rollout, self.real_rollout, water_threshold=water_threshold)
 
-    def plot_CSI_rollouts(self, water_thresholds=[0.05, 0.3]):
-        return self._plot_metric_rollouts('CSI', get_CSI, water_thresholds=water_thresholds)
+    def plot_CSI_rollouts(self, water_thresholds=[0.05, 0.3], ax=None):
+        return self._plot_metric_rollouts('CSI', get_CSI, water_thresholds=water_thresholds, ax=ax)
 
-    def plot_F1_rollouts(self, water_thresholds=[0.05, 0.3]):
-        return self._plot_metric_rollouts('F1', get_F1, water_thresholds=water_thresholds)
+    def plot_F1_rollouts(self, water_thresholds=[0.05, 0.3], ax=None):
+        return self._plot_metric_rollouts('F1', get_F1, water_thresholds=water_thresholds, ax=ax)
 
     def _get_rollout_loss(self, type_loss='RMSE', only_where_water=False):
         return get_rollout_loss(self.predicted_rollout, self.real_rollout, type_loss=type_loss, 
