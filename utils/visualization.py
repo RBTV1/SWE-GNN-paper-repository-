@@ -717,9 +717,9 @@ class PlotRollout():
 class DoublePlotRollout(PlotRollout):
     '''Use this function to compare 2 models side by side'''
     
-    def __init__(self, model1, model2, dataset, **temporal_test_dataset_parameters):
-        super().__init__(model=model1, dataset=dataset, scalers=None, 
-                         type_loss='RMSE', **temporal_test_dataset_parameters)
+    def __init__(self, model1, model2, dataset, scalers=None, type_loss='RMSE', **temporal_test_dataset_parameters):
+        super().__init__(model=model1, dataset=dataset, scalers=scalers, 
+                         type_loss=type_loss, **temporal_test_dataset_parameters)
         self.model1 = model1
         self.model2 = model2
 
