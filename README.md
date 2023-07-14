@@ -15,6 +15,7 @@ After downloading it, run the **create_dataset.ipynb** notebook inside the **dat
 For reproducing the paper's results, you can run **plot_results.ipynb**
 
 For training the model run **main.py** (which uses **config.yaml** as configuration file with all model's specifications)
+
 For exploring the trained models, run **try_model.ipynb**
 
 ### Environment setup
