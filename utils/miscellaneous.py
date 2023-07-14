@@ -250,7 +250,7 @@ class SpatialAnalysis():
         '''Plots loss in time for the different water variables'''
         if ax is None: fig, ax = plt.subplots(figsize=(7,5))
 
-        water_labels = ['h [m]', '|q| [m^2/s]']
+        water_labels = ['h [$m$]', '|q| [$m^2/s$]']
         var_colors = ['royalblue', 'purple']
         lines = []
 
@@ -317,7 +317,7 @@ class SpatialAnalysis():
 
         positions=range(len(sorted_ids))
         
-        water_labels = ['h [m]', '|q| [m^2/s]']
+        water_labels = ['h [$m$]', '|q| [$m^2$/s]']
         var_colors = ['royalblue', 'purple']
             
         axs[0].set_title(f'{ranking} ranking for test simulations')
