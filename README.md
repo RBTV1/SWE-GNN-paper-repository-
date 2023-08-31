@@ -5,30 +5,31 @@ Code repository for paper "Rapid Spatio-Temporal Flood Modelling via Hydraulics-
 
 ![summary_figure](summary_figure.png)
 
-## Overview
-
 All test video simulations can be found at <https://dx.doi.org/10.5281/zenodo.7652663>.
 
-To begin with running the experiments, you must first download the dataset from <https://dx.doi.org/10.5281/zenodo.7764418>.
-After downloading it, run the **create_dataset.ipynb** notebook inside the **database** folder and you will be good to go!
-
-For reproducing the paper's results, you can run **plot_results.ipynb**
-
-For training the model run **main.py** (which uses **config.yaml** as configuration file with all model's specifications)
-
-For exploring the trained models, run **try_model.ipynb**
+---
 
 # Get started with runnning the model
 
 * Download the dataset: <https://dx.doi.org/10.5281/zenodo.7764418>
 
-* Install the required libraries: run __pip install -r requirements.txt__. 
+* Install the required libraries:
 
-        For installing PyTorch-Geometric libraries, follow the steps on <https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html>. Consider the compatibility with your version of PyTorch.
+          pip install -r requirements.txt
+  
+  For installing PyTorch-Geometric libraries, follow the steps on <https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html>. Consider the compatibility with your version of PyTorch.
 
-* Convert the download dataset into pickle files: run **create_dataset.ipynb** inside the **database:** folder
+* Convert the download dataset into pickle files: run **create_dataset.ipynb** inside the **database** folder
 
 * Explore the other notebooks! Try starting with **try_model.ipynb**
+
+* For reproducing the paper's results, you can run **plot_results.ipynb**
+
+* For training the model
+
+        python main.py
+
+---
 
 ## Repository 
 
