@@ -14,7 +14,6 @@ scalers:
   slope_scaler      : null
   WD_scaler         : null
   V_scaler          : null
-  edge_slope_scaler : null
 
 # node features
 selected_node_features : 
@@ -28,7 +27,6 @@ selected_edge_features :
   cell_length   : True
   normal_x      : True
   normal_y      : True
-  edge_slope    : False
 
 # temporal training dataset
 temporal_dataset_parameters:

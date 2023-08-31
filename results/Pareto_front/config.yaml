@@ -5,7 +5,6 @@ dataset_parameters:
   train_size: 80
   val_prcnt: 0.25
   test_size: 20 #'big'
-  # test_size: 'random_breach'
   seed: 111
 
 # Scaler options: null, 'minmax', 'minmax_neg', or 'standard'
@@ -14,7 +13,6 @@ scalers:
   slope_scaler      : null
   WD_scaler         : null
   V_scaler          : null
-  edge_slope_scaler : null
 
 # node features
 selected_node_features : 
@@ -28,7 +26,6 @@ selected_edge_features :
   cell_length   : True
   normal_x      : True
   normal_y      : True
-  edge_slope    : False
 
 # temporal training dataset
 temporal_dataset_parameters:
