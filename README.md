@@ -18,11 +18,18 @@ For training the model run **main.py** (which uses **config.yaml** as configurat
 
 For exploring the trained models, run **try_model.ipynb**
 
-### Environment setup
+# Get started with runnning the model
 
-The required libraries are in requirements.txt. For installing PyTorch-Geometric libraries, follow the steps on <https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html>. Consider the compatibility with your version of PyTorch.
+* Download the dataset: <https://dx.doi.org/10.5281/zenodo.7764418>
 
-### Repository 
+* Install the required libraries: run __pip install -r requirements.txt__. 
+For installing PyTorch-Geometric libraries, follow the steps on <https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html>. Consider the compatibility with your version of PyTorch.
+
+* Convert the download dataset into pickle files: run **create_dataset.ipynb** inside the **database:** folder
+
+* Explore the other notebooks! Try starting with **try_model.ipynb**
+
+## Repository 
 
 The repository is divided in the following folders:
 
