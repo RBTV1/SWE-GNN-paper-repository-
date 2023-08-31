@@ -111,7 +111,7 @@ def get_node_features(data=None, scalers=None, slope_x=True, slope_y=True,
     return node_features
 
 def get_edge_features(data=None, scalers=None, cell_length=True, normal_x=True, normal_y=True, 
-                      edge_slope=True, device='cpu'):
+                      device='cpu'):
     '''Return the static edge features
 
     data: torch_geometric.data.data.Data
@@ -123,7 +123,6 @@ def get_edge_features(data=None, scalers=None, cell_length=True, normal_x=True, 
         cell_length: length of the cell side $l_{ij}$ (default=True)
         normal_x, normal_y: x and y components of the cell outward unit normal vector $n_{ij}$ (default=True)
         delta_DEM: difference in DEM between neighbouring nodes (default=False)
-        edge_slope: slope between connected nodes (default=True)
     '''
     edge_features = {
         'cell_length' : data.edge_distance, # valid only for grids but for now it's fine because it's the same thing
@@ -131,12 +130,6 @@ def get_edge_features(data=None, scalers=None, cell_length=True, normal_x=True, 
         'normal_y' : data.edge_relative_distance[:,1]/data.edge_distance,
     }
     
-    if scalers is None:
-        scalers = {'edge_slope_scaler' : None}
-
-    if edge_slope:
-        edge_features['edge_slope'] = process_attr(data.edge_slope, scaler=scalers['edge_slope_scaler'], device=device)
-
     selected_edge_features = locals()
 
     selected_edges = [edge_features[key].reshape(-1,1).to(device) for key, value in selected_edge_features.items() if value==True]
@@ -204,7 +197,7 @@ def create_data_attr(datasets, scalers=None, temporal_res=60, device='cpu', **se
 
     selected_edge_features = {
         key:selected_features[key] for key in 
-        ['cell_length', 'normal_x', 'normal_y', 'edge_slope']}
+        ['cell_length', 'normal_x', 'normal_y']}
 
     for data in datasets:
         temp = Data()
