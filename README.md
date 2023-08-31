@@ -23,7 +23,8 @@ For exploring the trained models, run **try_model.ipynb**
 * Download the dataset: <https://dx.doi.org/10.5281/zenodo.7764418>
 
 * Install the required libraries: run __pip install -r requirements.txt__. 
-For installing PyTorch-Geometric libraries, follow the steps on <https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html>. Consider the compatibility with your version of PyTorch.
+
+        For installing PyTorch-Geometric libraries, follow the steps on <https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html>. Consider the compatibility with your version of PyTorch.
 
 * Convert the download dataset into pickle files: run **create_dataset.ipynb** inside the **database:** folder
 
