@@ -6,6 +6,7 @@ from dfm_tools.get_nc import get_ncmodeldata
 from netCDF4 import Dataset
 import subprocess
 import time
+import os
 import pandas as pd
 import xarray as xr
 from tqdm import tqdm
@@ -145,7 +146,19 @@ def from_output_nc_to_txt(output_map, save_folder, seed):
     np.savetxt(f'{save_folder}/VY/VY_{seed}.txt', velocity_y, fmt='%1.4f')
 
     return None
-    
+
+def create_dataset_folders(dataset_folder='datasets'):
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+
+    train_folder = os.path.join(dataset_folder, 'train')
+    test_folder = os.path.join(dataset_folder, 'test')
+
+    if not os.path.exists(train_folder):
+        os.makedirs(train_folder)
+
+    if not os.path.exists(test_folder):
+        os.makedirs(test_folder)    
 
 def run_simulations(n_sim, model_folder, save_folder, start_sim=1, number_grids:int=64, 
                     noise_octave=8, initial_octave=4, DEM_multiplier=5, initial_DEM=1, 
