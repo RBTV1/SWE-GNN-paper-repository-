@@ -73,7 +73,6 @@ def get_scalers(dataset, scalers: dict):
     scalers['DEM_scaler'] = scaler(dataset, 'DEM', type_scaler=scalers['DEM_scaler'], to_min=True)
     # scalers['slope_scaler'] = scaler(dataset, ['slope_x', 'slope_y'], type_scaler=scalers['slope_scaler'])
     scalers['WD_scaler'] = scaler(dataset, 'WD', type_scaler=scalers['WD_scaler'])
-    scalers['edge_slope_scaler'] = scaler(dataset, 'edge_slope', type_scaler=scalers['edge_slope_scaler']) #delta_DEM is used to calculate edge_slope
     scalers['V_scaler'] = scaler(dataset, ('VX', 'VY'), type_scaler=scalers['V_scaler'])
 
     return scalers
