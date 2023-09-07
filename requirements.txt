@@ -10,4 +10,4 @@ perlin_noise
 ipywidgets
 PyYAML
 wandb
-torch
+torch==1.13.1
