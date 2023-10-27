@@ -2,6 +2,7 @@ matplotlib
 networkx
 numpy
 pandas
+opencv-python
 scikit_learn
 scipy
 tqdm
@@ -11,3 +12,4 @@ ipywidgets
 PyYAML
 wandb
 torch==1.13.1
+torch_geometric<2
