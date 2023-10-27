@@ -1,7 +1,7 @@
 # SWE-GNN (paper repository)
 Code repository for paper "Rapid Spatio-Temporal Flood Modelling via Hydraulics-Based Graph Neural Networks"
 
-(Version 1.1 (post-review) - June. 21st, 2023)
+(Version 1.1 (accepted version) - October 23st, 2023)
 
 ![summary_figure](summary_figure.png)
 
@@ -16,10 +16,8 @@ All test video simulations can be found at <https://dx.doi.org/10.5281/zenodo.76
 * Install the required libraries:
 
           pip install -r requirements.txt
-  
-  For installing PyTorch-Geometric libraries, follow the steps on <https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html>. Consider the compatibility with your version of PyTorch.
 
-* Convert the download dataset into pickle files: run **create_dataset.ipynb** inside the **database** folder
+* **IMPORTANT:** Convert the download dataset into pickle files: run **create_dataset.ipynb** inside the **database** folder
 
 * Explore the other notebooks! Try starting with **try_model.ipynb**
 
@@ -45,3 +43,23 @@ Also contains the output of the hydrodynamic simulations (**raw_datasets**: for 
 * **training:** Contains loss functions, Trainer object, and testing functions.
 
 * **utils:** Contains Python functions for loading, creating and scaling the dataset. There are also other miscellaneous functions and visualization functions.
+
+This version of the repository is not very robust to changes in inputs, so be careful to adapt the utils.dataset functions when you want to apply the model to a new dataset!
+The next version is much more flexible and also works with meshes, but it will be published later on, hehe.
+
+## Cite
+
+Please cite [our paper](https://egusphere.copernicus.org/preprints/2023/egusphere-2023-284/) as:
+
+```
+@Article{egusphere-2023-284,
+AUTHOR = {Bentivoglio, R. and Isufi, E. and Jonkman, S. N. and Taormina, R.},
+TITLE = {Rapid Spatio-Temporal Flood Modelling via Hydraulics-Based Graph Neural Networks},
+JOURNAL = {EGUsphere},
+VOLUME = {2023},
+YEAR = {2023},
+PAGES = {1--24},
+URL = {https://egusphere.copernicus.org/preprints/2023/egusphere-2023-284/},
+DOI = {10.5194/egusphere-2023-284}
+}
+```
