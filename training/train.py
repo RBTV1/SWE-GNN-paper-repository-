@@ -40,7 +40,6 @@ class Trainer(object):
         self.val_losses = []
         self.CSI_005 = []
         self.CSI_03 = []
-        self.conservation_loss = []
 
         self.early_stop = 0
         self.best_val_loss = 1
@@ -130,9 +129,6 @@ class Trainer(object):
                 CSI_005 = self.spatial_analyser._get_CSI(water_threshold=0.05).mean()
                 CSI_03 = self.spatial_analyser._get_CSI(water_threshold=0.3).mean()
                                 
-                # mass conservation validation
-                conservation_loss = self.spatial_analyser._get_mass_loss_in_time().mean(1).abs().mean()
-
                 progress_bar.set_description(f"\tTrain loss = {train_loss:4.4f}   "\
                                             f"Valid loss = {val_loss:1.4f}    "\
                                             rf"CSI_0.05 = {CSI_005:.3f}"\
@@ -141,14 +137,12 @@ class Trainer(object):
                 wandb.log({"train_loss": train_loss,
                            "valid_loss": val_loss,
                            r"CSI_0.05": CSI_005,
-                           r"CSI_0.3": CSI_03,
-                           "Conservation loss": conservation_loss})
+                           r"CSI_0.3": CSI_03})
 
                 self.train_losses.append(train_loss)
                 self.val_losses.append(val_loss) 
                 self.CSI_005.append(CSI_005) 
                 self.CSI_03.append(CSI_03) 
-                self.conservation_loss.append(conservation_loss) 
                 
                 self._use_learning_rate_scheduler()
                 self._update_best_model(model)
@@ -165,8 +159,7 @@ class Trainer(object):
         wandb.log({"training_time": self.training_time,
                    "valid_loss": min_val_loss,
                    r"CSI_0.05": self.CSI_005[argmin_val_loss],
-                   r"CSI_0.3": self.CSI_03[argmin_val_loss],
-                   f"Conservation loss": self.conservation_loss[argmin_val_loss]})
+                   r"CSI_0.3": self.CSI_03[argmin_val_loss]})
 
         try:
             print("Loading best model...")
