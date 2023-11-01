@@ -9,7 +9,11 @@ tqdm
 netCDF4
 perlin_noise
 ipywidgets
+ipykernel
+seaborn
 PyYAML
 wandb
 torch==1.13.1
-torch_geometric<2
+torch_geometric==2.2
+torch_sparse
+torch_scatter
