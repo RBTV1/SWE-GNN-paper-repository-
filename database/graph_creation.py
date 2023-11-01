@@ -174,3 +174,16 @@ def save_database(dataset, name, out_path='datasets'):
     pickle.dump(dataset, open(path, "wb" ))
         
     return None
+
+def create_dataset_folders(dataset_folder='datasets'):
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+
+    train_folder = os.path.join(dataset_folder, 'train')
+    test_folder = os.path.join(dataset_folder, 'test')
+
+    if not os.path.exists(train_folder):
+        os.makedirs(train_folder)
+
+    if not os.path.exists(test_folder):
+        os.makedirs(test_folder)
