@@ -244,7 +244,7 @@ class SpatialAnalysis():
         ax.grid()
         ax.legend(loc=4)
         
-        return ax, np.array(all_metric)
+        return fig, np.array(all_metric)
     
     def _plot_rollouts(self, type_loss, ax=None):
         '''Plots loss in time for the different water variables'''
