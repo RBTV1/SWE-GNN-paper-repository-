@@ -49,17 +49,18 @@ The next version is much more flexible and also works with meshes, but it will b
 
 ## Cite
 
-Please cite [our paper](https://egusphere.copernicus.org/preprints/2023/egusphere-2023-284/) as:
+Please cite [our paper](https://hess.copernicus.org/articles/27/4227/2023/) as:
 
 ```
-@Article{egusphere-2023-284,
+@Article{hess-27-4227-2023,
 AUTHOR = {Bentivoglio, R. and Isufi, E. and Jonkman, S. N. and Taormina, R.},
-TITLE = {Rapid Spatio-Temporal Flood Modelling via Hydraulics-Based Graph Neural Networks},
-JOURNAL = {EGUsphere},
-VOLUME = {2023},
+TITLE = {Rapid spatio-temporal flood modelling via hydraulics-based graph neural networks},
+JOURNAL = {Hydrology and Earth System Sciences},
+VOLUME = {27},
 YEAR = {2023},
-PAGES = {1--24},
-URL = {https://egusphere.copernicus.org/preprints/2023/egusphere-2023-284/},
-DOI = {10.5194/egusphere-2023-284}
+NUMBER = {23},
+PAGES = {4227--4246},
+URL = {https://hess.copernicus.org/articles/27/4227/2023/},
+DOI = {10.5194/hess-27-4227-2023}
 }
 ```
