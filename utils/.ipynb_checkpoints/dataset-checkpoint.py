@@ -1,12 +1,10 @@
 # Libraries
 import torch
 from torch_geometric.data import Data
-import os
+
 from utils.load import load_dataset
 from utils.scaling import get_scalers
 from sklearn.model_selection import train_test_split
-
-base_path = '/home/jupyter/SWE-GNN-paper-repository-'  
 
 def process_attr(attribute, scaler=None, to_min=False, device='cpu'):
     '''
@@ -227,7 +225,7 @@ def create_data_attr(datasets, scalers=None, temporal_res=60, device='cpu', **se
 
 
 def create_model_dataset(dataset_name, train_size=100, val_prcnt=0.3, test_size=50, 
-                         dataset_folder = os.path.join(base_path, 'database', 'datasets'),
+                         dataset_folder='database\\datasets',
                          scalers=None, seed=42, device='cpu', **dataset_parameters):
     '''
     Create dataset with scaled node and edge attributes
@@ -253,16 +251,15 @@ def create_model_dataset(dataset_name, train_size=100, val_prcnt=0.3, test_size=
             selects the desired time step for the temporal resolution
     '''
     # Load datasets
-    train_dataset = load_dataset(dataset_name, train_size, seed, os.path.join(dataset_folder, 'train'))
+    train_dataset = load_dataset(dataset_name, train_size, seed, dataset_folder+'/train')
     # create validation dataset from training
     train_dataset, val_dataset = train_test_split(train_dataset, test_size=val_prcnt, random_state=seed)
     if test_size == 'big' or test_size == 'big_random_breach':
-        test_dataset = load_dataset(dataset_name='big_random_breach_grid', size=10, seed=0, dataset_folder=os.path.join(dataset_folder, 'test'))
-
+        test_dataset = load_dataset('big_random_breach_grid', 10, seed=0, dataset_folder=dataset_folder+'/test')
     elif test_size == 'random_breach':
-        test_dataset = load_dataset(dataset_name='random_breach_grid', size=20, seed=0, dataset_folder=os.path.join(dataset_folder,'test'))
+        test_dataset = load_dataset('random_breach_grid', 20, seed=0, dataset_folder=dataset_folder+'/test')
     else:
-        test_dataset = load_dataset(dataset_name, test_size, seed=0, dataset_folder=os.path.join(dataset_folder,'test'))
+        test_dataset = load_dataset(dataset_name, test_size, seed=0, dataset_folder=dataset_folder+'/test')
     
     # Normalization
     scalers = get_scalers(train_dataset, scalers)

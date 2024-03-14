@@ -125,27 +125,31 @@ def convert_to_pyg(graph, pos, DEM, WD, VX, VY):
     return data
 
 def create_grid_dataset(dataset_folder, n_sim, start_sim=1, number_grids=64):
+    '''
+    Creates a pytorch geometric dataset with n_sim simulations
+    returns a regular grid graph dataset
+    ------
+    dataset_folder: str, path-like
+        path to raw dataset location
+    n_sim: int
+        number of simulations used in the dataset creation
+    '''
     assert os.path.exists(dataset_folder), "There is no raw dataset folder"
     grid_dataset = []
 
     graph, pos = center_grid_graph(number_grids,number_grids)
     
-    for i in tqdm(range(start_sim, start_sim + n_sim)):
-        DEM_path = os.path.join(dataset_folder, "DEM", f"DEM_{i}.txt")
-        WD_path = os.path.join(dataset_folder, "WD", f"WD_{i}.txt")
-        VX_path = os.path.join(dataset_folder, "VX", f"VX_{i}.txt")
-        VY_path = os.path.join(dataset_folder, "VY", f"VY_{i}.txt")
+    for i in tqdm(range(start_sim,start_sim+n_sim)):
 
-        DEM = np.loadtxt(DEM_path)[:, 2]
-        WD = np.loadtxt(WD_path)
-        VX = np.loadtxt(VX_path)
-        VY = np.loadtxt(VY_path)
+        DEM = np.loadtxt(f"{dataset_folder}\\DEM\\DEM_{i}.txt")[:,2]
+        WD = np.loadtxt(f"{dataset_folder}\\WD\\WD_{i}.txt")
+        VX = np.loadtxt(f"{dataset_folder}\\VX\\VX_{i}.txt")
+        VY = np.loadtxt(f"{dataset_folder}\\VY\\VY_{i}.txt")
         
         grid_i = convert_to_pyg(graph, pos, DEM, WD, VX, VY)
         grid_dataset.append(grid_i)
     
     return grid_dataset
-
 
 def save_database(dataset, name, out_path='datasets'):
     '''
