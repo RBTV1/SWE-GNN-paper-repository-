@@ -1,7 +1,6 @@
 # Libraries
 import torch
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-import os
 
 def get_none_scalers():
     none_scalers = {'DEM_scaler' : None, 

@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
-import os
 
 from training.test import get_rollouts
 from training.loss import mask_on_water, get_mean_error
